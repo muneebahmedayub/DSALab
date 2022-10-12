@@ -20,5 +20,8 @@ public class Lab4 {
 
         list.deleteNodeAt(2);
         list.printForward();
+        list.deleteAtEnd();
+        list.deleteAtHead();
+        list.printForward();
     }
 }

@@ -144,7 +144,26 @@ public class DoublyLinkedList {
         Node nextCurrent = current.next.next;
         current.next = nextCurrent;
         nextCurrent.previous =  current;
+    }
 
+    void deleteAtEnd() {
+        if(this.tail == null) {
+            System.out.println("List is empty...");
+            return;
+        }
+
+        this.tail = this.tail.previous;
+        this.tail.next = null;
+    }
+
+    void deleteAtHead() {
+        if(this.head == null) {
+            System.out.println("List is empty...");
+            return;
+        }
+
+        this.head = this.head.next;
+        this.head.previous = null;
     }
     
 }
