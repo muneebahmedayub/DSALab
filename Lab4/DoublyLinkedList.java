@@ -44,6 +44,7 @@ public class DoublyLinkedList {
         node.next = next;
         node.previous = temp;
         temp.next = node;
+        length++;
     }
 
     public void printForward() {
@@ -113,10 +114,37 @@ public class DoublyLinkedList {
         this.head = this.tail = null;
     }
 
-    public void deleteNodeAt() {
+    public void deleteNodeAt(int location) {
         if(this.head == null) {
-            
+            System.out.println("The list is empty...");
+            return;
         }
+
+        if(location > this.length) {
+            System.out.println("Node not found at index " + location);
+            return;
+        }
+        
+        if(location == 0) {
+            this.head = this.head.next;
+            this.head.previous = null;
+            return;
+        }
+        if(location == this.length - 1) {
+            this.tail = this.tail.previous;
+            this.tail.next = null;
+            return;
+        }
+
+        Node current = this.head;
+
+        for(int i=0; i<location-1; i++) {
+            current = current.next;
+        }
+        Node nextCurrent = current.next.next;
+        current.next = nextCurrent;
+        nextCurrent.previous =  current;
+
     }
     
 }
