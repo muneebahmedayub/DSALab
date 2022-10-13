@@ -6,7 +6,6 @@ public class LabHomeActivity4 {
         list.insert(1, 0);
         list.insert(2, 0);
         list.insert(100, 3);
-        System.out.println(list.length);
         list.insert(98, 3);
         list.insert(78, 9);
         list.insert(52, 0);
