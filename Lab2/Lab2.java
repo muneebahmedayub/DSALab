@@ -2,7 +2,6 @@ package Lab2;
 
 import java.util.HashMap;
 import java.util.Scanner;
-import java.util.stream.IntStream;
 
 public class Lab2 {
   static Scanner sc = new Scanner(System.in);

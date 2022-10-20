@@ -7,7 +7,7 @@ public class Lab5 {
 
     public static void infixToPostfix() {
         InfixToPostfix iToP = new InfixToPostfix();
-        System.out.println(iToP.toPostfix("(a+b*c)"));
+        System.out.println(iToP.toPostfix("((a+b)*c)"));
     }
 
     public static void stackArray() {
