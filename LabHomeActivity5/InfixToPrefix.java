@@ -1,137 +1,130 @@
 package LabHomeActivity5;
 
-public class InfixToPrefix {
-    Node head;
-    Node tail;
+import java.util.Scanner;
 
-    public InfixToPrefix() {
+public class InfixToPrefix {
+    Node top;
+
+    int size;
+
+    public InfixToPrefix(){
+
+        top = null;
+        size = 0;
     }
 
-    public void push(int nodeValue) {
+    private class Node{
+        Node next;
+        char data;
+    }
+
+    public void push(char value){
+
         Node node = new Node();
-        node.value = nodeValue;
-        if (head == null) {
-            node.next = null;
-            head = node;
-            tail = node;
-            return;
-        }
-        node.next = head;
-        head = node;
+        node.data = value;
+
+        node.next = top;
+        top = node;
+        size++;
     }
 
     public char pop() {
-        if (isEmpty()) {
-            System.out.println("The Stack is empty!!!");
-            return ' ';
-        }
-        char val = (char) head.value;
-        head = head.next;
-        return val;
+        char result = top.data;
+        top = top.next;
+        size--;
+        return result;
+
     }
 
-    public boolean isEmpty() {
-        return head == null;
+     public int precedence(char c){
+
+        switch (c){
+            case '+':
+            case '-':
+                return 1;
+            case '*':
+            case '/':
+                return 2;
+            case '^':
+                return 3;
+        }
+        return -1;
     }
 
-    public int peek() {
-        if (isEmpty()) {
-            System.out.println("The Stack is empty!!! (Will return -1)");
-            return -1;
-        }
-        return head.value;
+    public boolean isEmpty(){
+        return size == 0;
     }
 
-    public void print() {
-        if (isEmpty()) {
-            System.out.println("The Stack is empty!!!");
-            return;
-        }
-        Node temp = head;
-        while (temp != null) {
-            System.out.print(temp.value + " ");
-            temp = temp.next;
-        }
-        System.out.println();
-    }
-
-    private String reverse(String str) {
-        char[] charArr = str.toCharArray();
-        int start = 0;
-        int end = str.length() - 1;
-        
-        char temp;
-        while(start < end) {
-            temp = charArr[start];
-            charArr[start] = charArr[end];
-            charArr[end] = temp;
-            start++;
-            end--;
-        }
-
-        return String.valueOf(charArr);
+    public char peek(){
+        return top.data;
     }
 
 
-    private String toPostfix(String infix) {
-        InfixToPrefix operators = new InfixToPrefix();
-        char symbol;
-        String postfix = "";
-        for (int i = 0; i < infix.length(); ++i) {
-            symbol = infix.charAt(i);
-            if (Character.isLetter(symbol))
-                postfix = postfix + symbol;
-            else if (symbol == '(') {
-                operators.push(symbol);
-            } else if (symbol == ')') {
-                while (operators.peek() != '(') {
-                    postfix = postfix + operators.pop();
-                }
-                operators.pop(); // remove '('
-            } else {
-                while (!operators.isEmpty() &&
-                        !(operators.peek() == '(') && prec(symbol) <= prec((char) operators.peek()))
-                    postfix = postfix + operators.pop();
-                operators.push(symbol);
-            }
+    boolean isalpha(char c) {
+        if (c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z') {
+            return true;
         }
-        while (!operators.isEmpty())
-            postfix = postfix + operators.pop();
-        return postfix;
+        return false;
     }
 
-    public String toPrefix(String infix) {
-        String reversedInfix = reverse(infix);
-
-        char[] infixCharArr = reversedInfix.toCharArray();
-
-        for(int i=0; i < infixCharArr.length; i++) {
-            if(infixCharArr[i] == '(') {
-                infixCharArr[i] = ')';
-            } else if(infixCharArr[i] == ')') {
-                infixCharArr[i] = '(';
-            }
-            i++;
+    boolean isdigit(char c) {
+        if (c >= '0' && c <= '9') {
+            return true;
         }
-
-        String prefix = toPostfix(String.valueOf(infixCharArr));
-        prefix = reverse(prefix);
-
-        return prefix;
+        return false;
     }
 
-    int prec(char x) {
-        if (x == '+' || x == '-')
+    boolean isOperator(char c) {
+        return (!isalpha(c) && !isdigit(c));
+    }
+
+    int getPriority(char C) {
+        if (C == '-' || C == '+')
             return 1;
-        if (x == '*' || x == '/' || x == '%')
+        else if (C == '*' || C == '/')
             return 2;
+        else if (C == '^')
+            return 3;
+
         return 0;
     }
-}
 
+    public String infixToPrefix(String infix) {
+        String prefix = "";
+        InfixToPrefix stack = new InfixToPrefix();
 
-class Node {
+        for (int i = infix.length() - 1; i >= 0; i--) {
+            char symbol = infix.charAt(i);
 
-    int value;
-    Node next;
+            if (precedence(symbol) > 0) {
+                while (!stack.isEmpty() &&  precedence(stack.peek()) > precedence(symbol)) {
+                    prefix += stack.pop();
+                }
+                stack.push(symbol);
+            } else if (symbol == '(') {
+
+                char x = stack.pop();
+                while (x != ')') {
+                    prefix += x;
+                    x = stack.pop();
+                }
+
+            } else if (symbol == ')') {
+                stack.push(symbol);
+            } else {
+                prefix += symbol;
+            }
+        }
+
+        while (!stack.isEmpty()) {
+            prefix += stack.pop();
+        }
+
+        String reversedPrefix = "";
+        for (int i = prefix.length() - 1; i >= 0; i--) {
+            reversedPrefix += prefix.charAt(i);
+        }
+        return reversedPrefix;
+    }
+
 }

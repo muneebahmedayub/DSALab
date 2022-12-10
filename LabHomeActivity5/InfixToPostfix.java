@@ -55,8 +55,13 @@ public class InfixToPostfix {
         System.out.println();
     }
 
+    private class Node {
 
-    public String toPostfix(String infix) {
+        int value;
+        Node next;
+    }
+
+    String toPostfix(String infix) {
         InfixToPostfix operators = new InfixToPostfix();
         char symbol;
         String postfix = "";
@@ -90,11 +95,4 @@ public class InfixToPostfix {
             return 2;
         return 0;
     }
-}
-
-
-class Node {
-
-    int value;
-    Node next;
 }
