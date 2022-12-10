@@ -2,7 +2,7 @@ package Lab9;
 
 public class AVLTree {
     Node root;
-    
+
     public AVLTree() {
         root = null;
     }
@@ -103,8 +103,29 @@ public class AVLTree {
             print(node.right);
         }
     }
+
     void printTree() {
         BinaryTreePrinter.printNode(this.root);
+    }
+
+    private void print2D(Node root, int space) {
+        if (root == null)
+            return;
+ 
+        space += 10;
+ 
+        print2D(root.right, space);
+ 
+        System.out.print("\n");
+        for (int i = 10; i < space; i++)
+            System.out.print(" ");
+        System.out.print(root.data + "\n");
+ 
+        print2D(root.left, space);
+    }
+ 
+    void print2D() {
+        print2D(root, 0);
     }
 
 }

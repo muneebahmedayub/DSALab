@@ -10,7 +10,10 @@ public class Lab9 {
         tree.insert(40);
         tree.insert(50);
         tree.insert(25);
+        tree.insert(41);
+        tree.insert(62);
+        tree.insert(42);
 
-        tree.printTree();
+        tree.print2D();
     }
 }
