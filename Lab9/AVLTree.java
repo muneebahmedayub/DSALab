@@ -104,10 +104,6 @@ public class AVLTree {
         }
     }
 
-    void printTree() {
-        BinaryTreePrinter.printNode(this.root);
-    }
-
     private void print2D(Node root, int space) {
         if (root == null)
             return;
